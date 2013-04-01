@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Monospew basic test</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: default;
+        background-color: blue;
+      }
+      pre {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+      }
+      #clouds {
+        left: 0;
+        right: 0;
+        top: 0%;
+        bottom: 80%;
+        color: lightgray;
+      }
+      #rain {
+        left: 0;
+        right: 0;
+        top: 10%;
+        bottom: 45%;
+        color: aqua;
+      }
+      #grass {
+        left: 0;
+        right: 0;
+        top: 50%;
+        bottom: 40%;
+        color: lime;
+        background-color: green;
+      }
+      #mountain {
+        left: 0;
+        right: 0;
+        top: 60%;
+        bottom: 0;
+        color: orange;
+        background-color: brown;
+      }
+      #waterfall {
+        left: 30%;
+        right: 30%;
+        top: 50%;
+        bottom: 0;
+        color: blue;
+        background-color: navy;
+      }
+    </style>
+  </head>
+  <body>
+    <pre id="mountain"></pre>
+    <pre id="grass"></pre>
+    <pre id="waterfall"></pre>
+    <pre id="rain"></pre>
+    <pre id="clouds"></pre>
+    <script src="monospew.js"></script>
+    <script>
+      /*global monospew*/
+      monospew("#rain",{direction: "up", chars: "      .,.,:;"});
+      monospew("#clouds",{direction: "down", chars: "      sShHuU", delay: 400});
+      monospew("#grass",{chars: "^|", delay: 0});
+      monospew("#mountain",{chars: "   #XO1Y", delay: 0});
+      monospew("#waterfall",{direction: "up", chars: "oO0"});
+    </script>
+  </body>
+</html>
