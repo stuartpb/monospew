@@ -19,7 +19,7 @@
       #clouds {
         left: 0;
         right: 0;
-        top: 0%;
+        top: 0;
         bottom: 80%;
         color: lightgray;
       }
@@ -66,9 +66,9 @@
     <script>
       /*global monospew*/
       monospew("#rain",{append: "top", chars: "      .,.,:;"});
-      monospew("#clouds",{append: "bottom", chars: "      sShHuU", delay: 400});
-      monospew("#grass",{chars: "^|", delay: 0});
-      monospew("#mountain",{chars: "   #XO1Y", delay: 0});
+      monospew("#clouds",{append: "right", chars: "      sShHuU", delay: 1200});
+      monospew("#grass",{append: "left", chars: "/|", delay: 500});
+      monospew("#mountain",{append: "top", chars: "   #XO1Y", delay: 0});
       monospew("#waterfall",{append: "top", chars: "oO0"});
     </script>
   </body>

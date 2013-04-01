@@ -9,29 +9,6 @@ function monospew(element,opts){
   var width = opts.width || 80;
   var height = opts.height || 24;
 
-  function cullExtraLines(content) {
-    var lines = content.split('\n');
-    if(opts.append == 'top') {
-      return lines.slice(0,Math.min(lines.length+1, height+1)).join('\n');
-    } else {
-      return lines.slice(Math.max(lines.length-1-height, 0)).join('\n');
-    }
-  }
-
-  function fitLines(content) {
-    if(opts.append == 'left') {
-      return content.replace(/^.*$/mg,function(line){
-        return randomString(Math.max(width-line.length,0))
-          + line.slice(-width);
-      });
-    } else {
-      return content.replace(/^.*$/mg,function(line){
-        return line.slice(0,width) +
-          randomString(Math.max(width-line.length,0));
-      });
-    }
-  }
-
   function randomChar() {
     var chars = opts.chars ||
       ' !"#$%&\'()*+,-./0123456789:;<=>?' +
@@ -48,8 +25,35 @@ function monospew(element,opts){
     return lineChars.join('');
   }
 
-  function randomLine() {
-    return randomString(width) + '\n';
+  function fitLines(content) {
+    var lines = content.split('\n');
+
+    //Fit to height
+    var i;
+    if(opts.append == 'top') {
+      for(i = lines.length; i < height; i++)
+        lines[i] = randomString(width);
+      lines = lines.slice(0,height);
+    } else {
+      for(i = lines.length; i < height; i++)
+        lines.unshift(randomString(width));
+      lines = lines.slice(-height);
+    }
+
+    //Fit to width
+    if(opts.append == 'right') {
+      lines = lines.map(function(line){
+        return randomString(Math.max(width-line.length,0)) +
+          line.slice(-width);
+      });
+    } else {
+      lines = lines.map(function(line){
+        return line.slice(0,width) +
+          randomString(Math.max(width-line.length,0));
+      });
+    }
+
+    return lines.join('\n');
   }
 
   function append(base) {
@@ -58,24 +62,14 @@ function monospew(element,opts){
     } else if(opts.append == 'right') {
       return base.replace(/^.*$/mg,function(line){return line + randomChar()});
     } else if(opts.append == 'top') {
-      return randomLine() + base;
+      return randomString(width) + '\n' + base;
     } else {
-      return base + randomLine();
+      return base + '\n' +randomString(width);
     }
   }
 
   function instafill() {
-    if(opts.instant !== false){
-      var newContent = fitLines(cullExtraLines(element.textContent));
-      while((newContent.match(/\n/g)||[]).length < height) {
-        if(opts.append == 'top') {
-          newContent = randomLine() + newContent;
-        } else {
-          newContent += randomLine();
-        }
-      }
-      element.textContent = newContent;
-    }
+    element.textContent = fitLines(element.textContent);
   }
 
   retobj.resize = function(w,h) {
@@ -126,7 +120,7 @@ function monospew(element,opts){
   };
 
   retobj.timer = function() {
-    element.textContent = fitLines(cullExtraLines(append(element.textContent)));
+    element.textContent = fitLines(append(element.textContent));
   };
 
   //The interval / listener that has been configured for this function.
