@@ -50,36 +50,39 @@ function monospew(element,opts){
     }
   };
 
-  retobj.listener = function() { if(opts.fit !== false) {
-    var em;
-    if(opts.em){
-      em = opts.em;
-    } else {
-      var elcs = getComputedStyle(element);
-      em = document.createElement("pre");
-      em.style.fontFamily = elcs.fontFamily;
-      em.style.fontSize = elcs.fontSize;
-      em.style.fontStyle = elcs.fontStyle;
-      em.style.fontVariant = elcs.fontVariant;
-      em.style.fontWeight = elcs.fontWeight;
-      em.style.position = "absolute";
-      em.style.visibility = "hidden";
-      em.style.width = "auto";
-      em.style.height = "auto";
-      em.textContent = 'm';
-      //element must be in the document to get a clientWidth / Height
-      document.body.appendChild(em);
+  retobj.listener = function() {
+    var fillel = opts.fill === undefined ? element : opts.fill;
+    if (fillel){
+      var em;
+      if(opts.em){
+        em = opts.em;
+      } else {
+        var elcs = getComputedStyle(element);
+        em = document.createElement("pre");
+        em.style.fontFamily = elcs.fontFamily;
+        em.style.fontSize = elcs.fontSize;
+        em.style.fontStyle = elcs.fontStyle;
+        em.style.fontVariant = elcs.fontVariant;
+        em.style.fontWeight = elcs.fontWeight;
+        em.style.position = "absolute";
+        em.style.visibility = "hidden";
+        em.style.width = "auto";
+        em.style.height = "auto";
+        em.textContent = 'm';
+        //element must be in the document to get a clientWidth / Height
+        document.body.appendChild(em);
+      }
+      var cw = em.clientWidth;
+      var ch = em.clientHeight;
+      if(!opts.em){
+        document.body.removeChild(em);
+      }
+      var bw = fillel.clientWidth;
+      var bh = fillel.clientHeight;
+      retobj.resize(Math.floor(bw/cw) + (opts.bottomExtra || 0),
+        Math.floor(bh/ch) + (opts.rightExtra || 0));
     }
-    var cw = em.clientWidth;
-    var ch = em.clientHeight;
-    if(!opts.em){
-      document.body.removeChild(em);
-    }
-    var bw = element.parentElement.clientWidth;
-    var bh = element.parentElement.clientHeight;
-    retobj.resize(Math.floor(bw/cw) + (opts.bottomExtra || 0),
-      Math.floor(bh/ch) + (opts.rightExtra || 0));
-  }};
+  };
 
   retobj.timer = function() {
     element.textContent = addLine(
