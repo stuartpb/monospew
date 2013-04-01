@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Monospew basic test</title>
     <style>
-      html, body {
+      html, body, pre {
         height: 100%;
         margin: 0;
         padding: 0;
@@ -19,16 +19,11 @@
         user-select: none;
         cursor: default;
       }
-      pre {
-        margin: 0;
-        padding: 0;
-      }
     </style>
   </head>
   <body>
     <pre id="cascade"></pre>
     <script src="monospew.js"></script>
-    <script>monospew(document.getElementById("cascade"),
-      {fill: document.body})</script>
+    <script>monospew(document.getElementById("cascade"))</script>
   </body>
 </html>
