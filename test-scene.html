@@ -72,11 +72,11 @@
     <script src="monospew.js"></script>
     <script>
       /*global monospew*/
-      monospew("#rain",{direction: "up", chars: "      .,.,:;"});
-      monospew("#clouds",{direction: "down", chars: "      sShHuU", delay: 400});
+      monospew("#rain",{append: "top", chars: "      .,.,:;"});
+      monospew("#clouds",{append: "bottom", chars: "      sShHuU", delay: 400});
       monospew("#grass",{chars: "^|", delay: 0});
       monospew("#mountain",{chars: "   #XO1Y", delay: 0});
-      monospew("#waterfall",{direction: "up", chars: "oO0"});
+      monospew("#waterfall",{append: "top", chars: "oO0"});
     </script>
   </body>
 </html>

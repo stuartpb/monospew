@@ -1,4 +1,7 @@
 function monospew(element,opts){
+  if(typeof element == "string"){
+    element = document.querySelector(element);
+  }
   opts = opts || {};
   var retobj = {};
   var width = opts.width || 80;
@@ -6,10 +9,10 @@ function monospew(element,opts){
 
   function cullExtraLines(content) {
     while((content.match(/\n/g)||[]).length >= height) {
-      if(opts.direction != 'up') {
-        content = content.replace(/[^\n]*\n/,'');
-      } else {
+      if(opts.append == 'top') {
         content = content.replace(/[^\n]*\n$/,'');
+      } else {
+        content = content.replace(/[^\n]*\n/,'');
       }
     }
     return content;
@@ -32,10 +35,10 @@ function monospew(element,opts){
   }
 
   function addLine(base) {
-    if(opts.direction != 'up') {
-      return base + randomLine();
-    } else {
+    if(opts.append == 'top') {
       return randomLine() + base;
+    } else {
+      return base + randomLine();
     }
   }
 
@@ -51,7 +54,11 @@ function monospew(element,opts){
   };
 
   retobj.listener = function() {
-    var fillel = opts.fill === undefined ? element : opts.fill;
+    var fillel = (opts.fill === undefined ||
+      opts.fill === true) ? element : opts.fill;
+      if(typeof fillel == "string"){
+        fillel = document.querySelector(fillel);
+      }
     if (fillel){
       var em;
       if(opts.em){
