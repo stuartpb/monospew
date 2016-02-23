@@ -9,19 +9,26 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: blue;
+        background-color: #44c;
       }
       pre {
         margin: 0;
         padding: 0;
         position: absolute;
       }
-      #clouds {
+      #stratus {
         left: 0;
         right: 0;
         top: 0;
         bottom: 80%;
         color: lightgray;
+      }
+      #cumulus {
+        left: 0;
+        right: 0;
+        top: 2.5%;
+        bottom: 82.5%;
+        color: white;
       }
       #rain {
         left: 0;
@@ -54,22 +61,34 @@
         color: blue;
         background-color: navy;
       }
+      #waterfall-top {
+        left: 30%;
+        right: 30%;
+        top: 50%;
+        bottom: 40%;
+        color: blue;
+        background-color: rgba(0,0,255,0.5);
+      }
     </style>
   </head>
   <body>
     <pre id="mountain"></pre>
     <pre id="grass"></pre>
     <pre id="waterfall"></pre>
+    <pre id="waterfall-top"></pre>
     <pre id="rain"></pre>
-    <pre id="clouds"></pre>
+    <pre id="stratus"></pre>
+    <pre id="cumulus"></pre>
     <script src="monospew.js"></script>
     <script>
       /*global monospew*/
       monospew("#rain",{append: "top", chars: "      .,.,:;"});
-      monospew("#clouds",{append: "right", chars: "      sShHuU", delay: 1200});
+      monospew("#stratus",{append: "right", chars: "        *-_", delay: 1200});
+      monospew("#cumulus",{append: "right", chars: "   sShHuU", delay: 350});
       monospew("#grass",{append: "left", chars: "/|", delay: 500});
       monospew("#mountain",{append: "top", chars: "   #XO1Y", delay: 0});
       monospew("#waterfall",{append: "top", chars: "oO0"});
+      monospew("#waterfall-top",{append: "left", delay: 500, chars: "   ,'"});
     </script>
   </body>
 </html>
