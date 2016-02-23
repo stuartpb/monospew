@@ -57,7 +57,9 @@ function monospew(element,opts){
   }
 
   function append(base) {
-    if(opts.append == 'left') {
+    if(opts.append == 'replace') {
+      return fitLines('');
+    } else if(opts.append == 'left') {
       return base.replace(/^.*$/mg,function(line){return randomChar() + line});
     } else if(opts.append == 'right') {
       return base.replace(/^.*$/mg,function(line){return line + randomChar()});
